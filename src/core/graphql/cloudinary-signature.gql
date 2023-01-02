@@ -1,0 +1,9 @@
+query CloudinarySignature {
+  cloudinariSignature {
+    apiKey
+    cloudName
+    publicId
+    signature
+    timestamp
+  }
+}
