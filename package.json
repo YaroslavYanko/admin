@@ -39,16 +39,20 @@
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "eslintConfig": {
-    "files": [
-       "**/*.tsx"
-    ],
     "extends": [
       "react-app",
       "react-app/jest"
     ],
-    "rules": {
-      "react-hooks/exhaustive-deps": "off"
-    }
+    "overrides": [
+      {
+        "files": [
+          "**/*.tsx"
+        ],
+        "rules": {
+          "react-hooks/exhaustive-deps": "off"
+        }
+      }
+    ]
   },
   "browserslist": {
     "production": [
