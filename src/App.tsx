@@ -1,28 +1,34 @@
 import { CssBaseline } from '@mui/material';
 import { useEffect, useState } from 'react';
-import buildHasuraProvider from 'ra-data-hasura'
+
 import { Admin, DataProvider, Loading, Resource } from 'react-admin';
-import { GoodList } from '@app/modules/menu/components/goods-list/goods-list.component';
-import { GoodEdit } from '@app/modules/menu/components/goods-edit/goods-edit.component';
-import { GoodsCreate } from '@app/modules/menu/components/goods-create/goods-create.component';
 import { authProvider } from '@app/core/auth-provider';
-import { apolloClient } from './core/apollo-client';
+
 import { theme } from './core/themes';
 import { i18nProvider } from './core/i18n';
+import { Layout } from './common/components/layout/layout.component';
+
+import { buildDataProvider } from './core/data-provider';
+import { goodsResource } from './modules/goods/goods.resource';
+import { categoryResource } from './modules/goods/category.resource';
+import { ordersResource } from './modules/goods/orders.resource';
+import { Dashboadr } from './modules/dashboard/dashboard.components';
+
 
 
 
 function App() {
+
+
   const [dataProvider, setDataProvider] = useState<DataProvider<string> | null>(null)
 
   useEffect(() => {
-    const buildDataProvider = async () => {
-      const dataP = await buildHasuraProvider({
-        client: apolloClient,
-      })
+    const getDataProvider = async () => {
+      const dataP = await buildDataProvider()
+
       setDataProvider(dataP)
     }
-    buildDataProvider()
+    getDataProvider()
   }, [])
 
   if (!dataProvider) {
@@ -38,15 +44,28 @@ function App() {
         theme={theme}
         i18nProvider={i18nProvider}
         requireAuth
-        >
+        layout={Layout}
+        dashboard={Dashboadr}
+      >
 
-        <Resource 
-        name="goods" 
-        list={GoodList} 
-        edit={GoodEdit} 
-        create={GoodsCreate} 
-        options={{label:'Товари'}}
-        />
+        <Resource {...goodsResource} />
+        <Resource {...categoryResource} />
+        <Resource  {...ordersResource} />
+      
+    
+        <Resource name='order_status' />
+        <Resource name='orders_products' />
+        <Resource name='last_week_orders' />
+
+
+        {/* <Resource
+          name='settings'
+          list={ListGuesser}
+          edit={SettingEdit}
+          options={{ label: 'Налаштування' }}
+          icon={SettingsIcon}
+        /> */}
+
       </Admin>
     </>
   );

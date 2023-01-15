@@ -13,10 +13,12 @@ interface CloudinaryInputUIProps {
     value?: string;
     disabled: boolean;
     onImageSelected: (image: File) => void;
+    fitImage?:boolean;
 }
 
-export const CloudinaryInputUI: FC<CloudinaryInputUIProps> = ({ label, value, disabled, onImageSelected }) => {
+export const CloudinaryInputUI: FC<CloudinaryInputUIProps> = ({ label, value, disabled, onImageSelected,fitImage }) => {
     const inputRef = useRef<HTMLInputElement>(null)
+
     const onFileInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         if (!e.target.files) {
             return
@@ -31,7 +33,12 @@ export const CloudinaryInputUI: FC<CloudinaryInputUIProps> = ({ label, value, di
 
     const image = cloudinary.image(value)
 
-    //image.addTransformation('w_984,h_440,dpr_2.0')
+   const transformation = ["w_984", "h_440", "dpr_2.0"]
+    if(fitImage){
+        transformation.push('c_pad')
+    }
+//    'c_pad,w_984,h_440,dpr_2.0'
+    image.addTransformation(transformation.join(','))
 
     return (
         <div style={{ marginBottom: 20 }}>
@@ -40,7 +47,7 @@ export const CloudinaryInputUI: FC<CloudinaryInputUIProps> = ({ label, value, di
                 <Card variant="outlined">
                     <CardHeader title={label} />
                     <CardContent>
-                        {value ? <AdvancedImage cldImg={image}  width={250} /> : <Skeleton variant="rectangular" width={250}  />}
+                        {value ? <AdvancedImage cldImg={image}  width={250} height={250}/> : <Skeleton variant="rectangular" width={250} height={250}  />}
                     </CardContent>
                     <CardActions>
                         <Button variant="contained" onClick={onUpLoadClcik} disabled={disabled}>
