@@ -27,6 +27,7 @@
     "react-admin": "^4.6.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.40.0",
+    "react-onesignal": "^2.0.4",
     "react-scripts": "5.0.1",
     "recharts": "^2.3.2",
     "typescript": "^4.9.4",
@@ -34,7 +35,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "CI=false craco build",
+    "build": "craco build",
     "test": "craco test",
     "codegen": "graphql-codegen --config codegen.yml"
   },

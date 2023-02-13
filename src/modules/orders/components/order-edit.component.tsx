@@ -1,29 +1,29 @@
-import { ManyToManyInput } from '@app/common/components/many-to-many-input/many-to-many-input.componet';
-import { useManyToManyInput } from '@app/common/hooks/useManyToManyInput';
-
-import { Edit, ReferenceInput, SelectInput, SimpleForm, TextInput, useDataProvider } from 'react-admin';
+import { Edit, ReferenceInput, SelectInput, SimpleForm, TextInput } from 'react-admin';
+import { useProductsOrderInput } from './hooks/use-products-order-input.hook';
 import { OrderForm } from './order.types';
+import { ProductsOrderInput } from './products-order-input.component';
 
 
 
 
 export const OrderEdit = () => {
-    const { mutateJoinResource,fieldsProps } = useManyToManyInput({ 
-        joinResource: 'orders_products', 
-        resourceField: 'order_id', 
-        referenceField: 'products_id' 
-    })
 
-
+    const { mutate } = useProductsOrderInput()
 
 
     const transform = async (data: OrderForm) => {
-        await mutateJoinResource({ 
-            id: data.id, 
-            newReferences: data.joined_orders_products
+
+        await mutate({
+            id:data.id,
+            newReferences:data.joined_orders_products,
         })
+
+
         return data
-    }
+    };
+
+
+
 
 
 
@@ -37,12 +37,10 @@ export const OrderEdit = () => {
                 <ReferenceInput reference='order_status' source='status'>
                     <SelectInput optionText="label" label="Статус замовлення" />
                 </ReferenceInput>
-                <ManyToManyInput
-                    label='Товари'
-                    reference='goods'
-                    source="joined_orders_products"
-                    {...fieldsProps}
-                />
+                <ReferenceInput reference='payment_types' source='payment_type'>
+                    <SelectInput optionText="label" label="Спосіб оплати" />
+                </ReferenceInput>
+                <ProductsOrderInput />
             </SimpleForm>
         </Edit>
     )

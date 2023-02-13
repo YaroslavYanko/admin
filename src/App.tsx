@@ -13,6 +13,8 @@ import { goodsResource } from './modules/goods/goods.resource';
 import { categoryResource } from './modules/goods/category.resource';
 import { ordersResource } from './modules/goods/orders.resource';
 import { Dashboadr } from './modules/dashboard/dashboard.components';
+import { customerResource } from './modules/customers/customers.resource';
+import OneSignalReact from 'react-onesignal';
 
 
 
@@ -29,6 +31,12 @@ function App() {
       setDataProvider(dataP)
     }
     getDataProvider()
+  }, [])
+
+  useEffect(() => {
+    OneSignalReact.init({
+      appId: "cbaf804b-15cb-4449-8fed-b85012e9780f",
+    });
   }, [])
 
   if (!dataProvider) {
@@ -51,20 +59,13 @@ function App() {
         <Resource {...goodsResource} />
         <Resource {...categoryResource} />
         <Resource  {...ordersResource} />
-      
-    
+        <Resource  {...customerResource} />
+
+
         <Resource name='order_status' />
         <Resource name='orders_products' />
         <Resource name='last_week_orders' />
 
-
-        {/* <Resource
-          name='settings'
-          list={ListGuesser}
-          edit={SettingEdit}
-          options={{ label: 'Налаштування' }}
-          icon={SettingsIcon}
-        /> */}
 
       </Admin>
     </>

@@ -1,3 +1,4 @@
+import OneSignalReact from "react-onesignal";
 import { AdminGetMeQuery } from '@app/core/types';
 import { JWT_ADMIN_TOKEN } from "./constants";
 import { apolloClient } from "@app/core/apollo-client";
@@ -14,12 +15,16 @@ export const authProvider = {
       query: AdminLoginQueryGql,
       variables,
     });
+
+  
     if (!data.adminLogin?.accessToken) {
       return Promise.reject();
     }
     localStorage.setItem(JWT_ADMIN_TOKEN, data.adminLogin.accessToken);
   },
   logout: () => {
+
+    OneSignalReact.removeExternalUserId()
     localStorage.removeItem(JWT_ADMIN_TOKEN);
     return Promise.resolve();
   },
@@ -38,6 +43,9 @@ export const authProvider = {
     const {data} = await apolloClient.query<AdminGetMeQuery>({
       query: AdminGetMeQueryGql
     })
+
+
+    OneSignalReact.setExternalUserId(data.adminGetMe!.id)
 
   return Promise.resolve({
     id:data.adminGetMe!.id,

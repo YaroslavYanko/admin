@@ -10,7 +10,7 @@ export const GoodsCreate = () => (
                 </ReferenceInput>
             <CloudinaryInput source='image' label="Фото"/>
             <TextInput source="title" fullWidth label="Назва" />
-            <TextInput source="description" fullWidth label="Опис" />
+            <TextInput source="description" multiline fullWidth label="Опис" />
             <NumberInput source="price" label="Ціна в грн" />
         </SimpleForm>
     </Create>
