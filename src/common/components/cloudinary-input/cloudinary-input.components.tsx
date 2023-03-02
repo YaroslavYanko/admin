@@ -26,7 +26,7 @@ export const CloudinaryInput: FC<InputProps> = (props) => {
         const { cloudName, apiKey, publicId, signature, timestamp } = cloudSignature.cloudinariSignature
           
       
-        const url = `http://api.cloudinary.com/v1_1/${cloudName}/upload`
+        const url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`
 
         const formData = new FormData()
         formData.append('file', image)
