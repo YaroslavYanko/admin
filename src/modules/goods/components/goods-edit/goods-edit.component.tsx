@@ -15,7 +15,9 @@ export const GoodEdit = () => {
                 <CloudinaryInput source='image' label="Фото" />
                 <TextInput source="id" disabled />
                 <TextInput source="title" fullWidth label="Назва" />
+                <TextInput source="characteristics" multiline fullWidth label="Характеристики" />
                 <TextInput source="description" multiline fullWidth label="Опис" />
+                <TextInput source="ingredients" multiline fullWidth label="Інгрідієнти" />
                 <NumberInput source="price" label="Ціна в грн" />
             </SimpleForm>
         </Edit>

@@ -24,8 +24,9 @@ export const CloudinaryInput: FC<InputProps> = (props) => {
             return
         }
         const { cloudName, apiKey, publicId, signature, timestamp } = cloudSignature.cloudinariSignature
-
-        const url = `https://api.cloudinary.com/v1_1/${cloudName}/upload`
+          
+      
+        const url = `http://api.cloudinary.com/v1_1/${cloudName}/upload`
 
         const formData = new FormData()
         formData.append('file', image)
@@ -35,17 +36,16 @@ export const CloudinaryInput: FC<InputProps> = (props) => {
         formData.append('timestamp', String(timestamp))
         formData.append('folder', 'goods')
 
-        let data :CloudinaryUploadDTO
+        let data: CloudinaryUploadDTO;
         try {
-            const response = await axios.post<CloudinaryUploadDTO>(url, formData)
-            data = response.data
-
+          ({ data } = await axios.post<CloudinaryUploadDTO>(url, formData));
         } catch (error) {
-            notify((error as AxiosError).message)
+          notify((error as AxiosError).message);
         }
-
-        onChange(data!.public_id)
-    }
+        
+        onChange(data!.public_id);
+      };
+    
 
     return <CloudinaryInputUI label={computedLabel} value={value} disabled={loading} onImageSelected={onImageSelected} />
 }
